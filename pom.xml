@@ -1,18 +1,66 @@
-# nexus--maven-samples
-Series of tutorial code snippets for use
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.3.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.example</groupId>
+	<artifactId>demo</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<name>demo</name>
+	<description>Demo project for Spring Boot</description>
 
-#Maven publish tutorial steps
-Publishing artifact to Nexus snapshot and release repo using maven.
+	<properties>
+		<java.version>1.8</java.version>
+	</properties>
 
-1. Create a snapshot repo using nexus, or use default coming in out of the box.
-2. Create a release repo using nexus, or use default coming out of the box.
-3. Create a group repo having both release, snapshot and other third party repos. or use default coming out of the box.
-4. Download spring initializer project
-5. Go settings.xml under <MAVEN_INSTALL_LOCATION>\apache-maven-3.6.0\conf or C:\Users\<USER_NAME>\.m2
-6. Create profiles named snapshot and release in settings.xml (can be done in pom.xml as well)
-7. Add server user name and pwd in setting.xml (Encrypted recommended).
-8. Edit pom.xml and add repository and snapshot repository in distribution management tag
-9. Mark id should match in step 7 with server id of settings.xml
-10. Run mvn clean deploy, this will publish to snapshot repo
-11. Change the version from 1.0-Snapshot to 1.0
-12. Run mvn clean deploy -P release, it will deploy it to release repo
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<!--plugin>
+   				<groupId>org.apache.maven.plugins</groupId>
+   				<artifactId>maven-deploy-plugin</artifactId>
+   				<version>${maven-deploy-plugin.version}</version>
+   			</plugin-->
+		</plugins>
+	</build>
+
+	<distributionManagement>
+    <snapshotRepository>
+      <id>nexusdeploymentrepo</id>
+      <url>http://localhost:9081/repository/maven-snapshots/</url>
+    </snapshotRepository>
+	<repository>
+	  <id>nexusdeploymentrepo</id>
+      <url>http://localhost:9081/repository/maven-releases/</url>
+    </repository>
+  
+  </distributionManagement>
+
+</project>
